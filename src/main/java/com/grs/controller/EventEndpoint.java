@@ -5,6 +5,7 @@ import com.grs.model.dto.EventDto;
 import com.grs.model.dto.HostDto;
 import com.grs.service.EventService;
 import com.grs.service.HostService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +17,7 @@ import java.util.List;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/rest/v1/event")
+@Tag(name = "Event")
 public class EventEndpoint {
 
     @Autowired
