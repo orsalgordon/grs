@@ -4,6 +4,7 @@ import com.grs.model.dto.HostDto;
 import com.grs.model.dto.LoginRequestDto;
 import com.grs.model.dto.LoginResponseDto;
 import com.grs.service.HostService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +16,7 @@ import java.util.List;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/rest/v1/host")
+@Tag(name = "Host")
 public class HostEndpoint {
 
     @Autowired

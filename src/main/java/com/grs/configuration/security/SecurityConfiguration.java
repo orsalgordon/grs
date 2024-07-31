@@ -1,4 +1,4 @@
-package com.grs.security;
+package com.grs.configuration.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
