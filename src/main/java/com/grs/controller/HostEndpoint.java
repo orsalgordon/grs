@@ -32,11 +32,6 @@ public class HostEndpoint {
         return ResponseEntity.ok(hostService.getHostById(id));
     }
 
-    @PostMapping
-    public ResponseEntity<HostDto> createHost(@RequestBody HostDto hostDto){
-        return ResponseEntity.ok(hostService.createHost(hostDto));
-    }
-
     @PatchMapping("{id}")
     public ResponseEntity<HostDto> updateHost(@PathVariable("id") Integer id, @RequestBody HostDto hostDto){
         return ResponseEntity.ok(hostService.updateHost(id, hostDto));
@@ -51,5 +46,10 @@ public class HostEndpoint {
     @PostMapping("/login")
     public ResponseEntity<LoginResponseDto> login(@RequestBody LoginRequestDto request){
         return ResponseEntity.ok(hostService.login(request));
+    }
+
+    @PostMapping
+    public ResponseEntity<HostDto> signup(@RequestBody HostDto hostDto){
+        return ResponseEntity.ok(hostService.signup(hostDto));
     }
 }

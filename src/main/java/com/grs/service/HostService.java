@@ -1,5 +1,6 @@
 package com.grs.service;
 
+import com.grs.client.AuthClient;
 import com.grs.exception.InternalServerException;
 import com.grs.exception.NotFoundException;
 import com.grs.model.Host;
@@ -21,6 +22,7 @@ public class HostService {
 
     private HostRepository hostRepository;
     private PasswordEncoder passwordEncoder;
+    private AuthClient authClient;
 
     public List<HostDto> getALlHosts() {
         List<Host> hosts = hostRepository.findAll();
@@ -32,15 +34,6 @@ public class HostService {
     public HostDto getHostById(Integer id) {
         Optional<Host> host = hostRepository.findById(id.longValue());
         return host.map(HostDto::of).orElseThrow(() -> new NotFoundException(String.format("Host with id %s not found", id)));
-    }
-
-    public HostDto createHost(HostDto hostDto) {
-        Host host = DTOMapper.map(hostDto);
-        host.setPassword(passwordEncoder.encode(hostDto.getPassword()));
-        Host response = hostRepository.save(host);
-        return Optional.of(response)
-                .map(HostDto::of)
-                .orElseThrow(() -> new InternalServerException("There's an error saving the host details"));
     }
 
     public HostDto updateHost(Integer id, HostDto hostDto) {
@@ -63,27 +56,11 @@ public class HostService {
         }
     }
 
-    public LoginResponseDto login(LoginRequestDto request) {
-        String email = request.getEmail();
-        String password = request.getPassword();
+    public HostDto signup(HostDto request) {
+        return authClient.callAuthSignup(request);
+    }
 
-        try {
-            Host host = hostRepository.findByEmail(email);
-            if (host != null) {
-                boolean isSame = passwordEncoder.matches(password, host.getPassword());
-                if (isSame) {
-                    return LoginResponseDto.builder()
-                            .message(String.valueOf(host.getHostId()))
-                            .status(true)
-                            .build();
-                }
-            }
-            return LoginResponseDto.builder()
-                    .message("Invalid email or password")
-                    .status(false)
-                    .build();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+    public LoginResponseDto login(LoginRequestDto request) {
+        return authClient.callAuthLogin(request);
     }
 }
