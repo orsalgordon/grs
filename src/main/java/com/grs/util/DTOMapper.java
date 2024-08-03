@@ -43,6 +43,7 @@ public class DTOMapper {
         gift.setName(giftDto.getName());
         gift.setDescription(giftDto.getDescription());
         gift.setLink(giftDto.getLink());
+        gift.setAvailable(giftDto.isAvailable());
         return gift;
     }
 }

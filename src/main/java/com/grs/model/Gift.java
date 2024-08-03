@@ -18,4 +18,6 @@ public class Gift {
     private String description;
     @Column
     private String link;
+    @Column(columnDefinition="bit default 1", nullable = false)
+    private boolean available;
 }

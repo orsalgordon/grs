@@ -2,6 +2,7 @@ package com.grs.controller;
 
 import com.grs.model.dto.EventDto;
 import com.grs.model.dto.GiftDto;
+import com.grs.model.dto.UpdateGiftRequest;
 import com.grs.service.EventService;
 import com.grs.service.GiftService;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -46,5 +47,10 @@ public class GiftEndpoint {
     public ResponseEntity<?> deleteGift(@PathVariable("id") Integer id){
         giftService.deleteGift(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping("/{id}")
+    public ResponseEntity<GiftDto> addGift(@PathVariable("id") Integer id, @RequestBody UpdateGiftRequest request){
+        return ResponseEntity.ok(giftService.updateGiftAvailability(id, request));
     }
 }

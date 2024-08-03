@@ -6,6 +6,7 @@ import com.grs.model.Event;
 import com.grs.model.Gift;
 import com.grs.model.dto.EventDto;
 import com.grs.model.dto.GiftDto;
+import com.grs.model.dto.UpdateGiftRequest;
 import com.grs.repository.GiftRepository;
 import com.grs.util.DTOMapper;
 import lombok.AllArgsConstructor;
@@ -63,5 +64,17 @@ public class GiftService {
         } catch (Exception e) {
             throw new InternalServerException("There's an error deleting the gift details for id " + id);
         }
+    }
+
+    public GiftDto updateGiftAvailability(Integer id, UpdateGiftRequest request) {
+        Gift existingGift = giftRepository.findByEventIdAndGiftId(request.getEventId(), id.longValue());
+        if (existingGift != null) {
+            existingGift.setAvailable(request.isAvailable());
+            Gift response = giftRepository.save(existingGift);
+            return Optional.of(response)
+                    .map(GiftDto::of)
+                    .orElseThrow(() -> new InternalServerException("There's an error saving the gift details"));
+        }
+        throw new NotFoundException(String.format("Gift with id %s not found", id));
     }
 }

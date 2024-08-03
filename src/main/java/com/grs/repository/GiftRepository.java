@@ -8,4 +8,5 @@ import java.util.List;
 public interface GiftRepository extends JpaRepository<Gift, Long> {
 
     List<Gift> findAllByEventId(Long eventId);
+    Gift findByEventIdAndGiftId(Long eventId, Long giftId);
 }

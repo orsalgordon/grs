@@ -16,6 +16,7 @@ public class GiftDto {
     private String name;
     private String description;
     private String link;
+    private boolean available;
 
     public static GiftDto of(Gift gift) {
         return GiftDto.builder()
@@ -24,6 +25,7 @@ public class GiftDto {
                 .name(gift.getName())
                 .description(gift.getDescription())
                 .link(gift.getLink())
+                .available(gift.isAvailable())
                 .build();
     }
 }
