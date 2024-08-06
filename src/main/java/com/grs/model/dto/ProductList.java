@@ -5,15 +5,12 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class Product {
-    public int id;
-    public String title;
-    public String price;
-    public String category;
-    public String description;
-    public String image;
+public class ProductList {
+    public List<Product> products;
 }

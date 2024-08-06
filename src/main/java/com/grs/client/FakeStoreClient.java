@@ -1,37 +1,29 @@
 package com.grs.client;
 
-import com.grs.model.dto.HostDto;
-import com.grs.model.dto.LoginRequestDto;
-import com.grs.model.dto.LoginResponseDto;
+import com.grs.model.dto.*;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
 
+import java.util.List;
+
 @Service
-public class AuthClient {
+public class FakeStoreClient {
 
     private final RestClient restClient;
 
-    public AuthClient(@Value("${auth.base.url}") String url) {
+    public FakeStoreClient(@Value("${fakestore.url}") String url) {
         restClient = RestClient.builder()
                 .baseUrl(url)
                 .build();
     }
 
-    public HostDto callAuthSignup(HostDto request) {
-        return restClient.post()
-                .uri("/signup")
-                .body(request)
+    public List<Product> getProducts() {
+        return restClient.get()
+                .uri("/api/products")
                 .retrieve()
-                .body(HostDto.class);
-    }
-
-    public LoginResponseDto callAuthLogin(LoginRequestDto request) {
-        return restClient.post()
-                .uri("/login")
-                .body(request)
-                .retrieve()
-                .body(LoginResponseDto.class);
+                .body(new ParameterizedTypeReference<List<Product>>() {
+                });
     }
 }
